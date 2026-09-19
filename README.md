@@ -109,6 +109,19 @@ flowchart LR
 | [Coding Agents](agents/coding-agents.md) | Repository work, editing, testing, and secure execution |
 | [Multi-Agent Systems](agents/multi-agent.md) | Delegation, coordination, shared state, and evaluation |
 
+## Learn Retrieval-Augmented Generation
+
+RAG connects language models to external knowledge so answers can be fresher, traceable, and grounded in evidence.
+
+```mermaid
+flowchart LR
+    D["Documents"] --> C["Chunking"] --> E["Embeddings"] --> V["Vector search"]
+    Q["Question"] --> R["Retrieval"]
+    V --> R --> RR["Reranking"] --> G["Grounded generation"]
+```
+
+[Explore the complete RAG learning path →](rag/README.md)
+
 ## Model Family Guides
 
 Each completed guide contains a recommended reading order, clickable evolution diagram, technical comparison table, and capability matrix.
@@ -116,6 +129,7 @@ Each completed guide contains a recommended reading order, clickable evolution d
 | Model family | Guide | Main themes |
 |---|---|---|
 | OpenAI GPT | [Explore GPT →](models/gpt/README.md) | Pretraining, RLHF, multimodality, reasoning, and agents |
+| Anthropic Claude | [Explore Claude →](models/claude/README.md) | Constitutional AI, long context, coding, tools, and agents |
 | DeepSeek | [Explore DeepSeek →](models/deepseek/README.md) | MoE, MLA, reinforcement learning, and sparse attention |
 | Google Gemini | [Explore Gemini →](models/gemini/README.md) | Native multimodality, long context, thinking, and tools |
 | Meta Llama | [Explore Llama →](models/llama/README.md) | Open weights, efficient deployment, vision, and MoE |
@@ -155,9 +169,12 @@ Model names alone rarely tell the full story. Consider several dimensions:
 Orvilo/
 ├── README.md                  Project overview and learning path
 ├── assets/                    Documentation images
+├── agents/                    AI agent learning guides
+├── rag/                       Retrieval-Augmented Generation guides
 ├── models/
 │   ├── *.md                   Foundational concepts
 │   ├── deepseek/              DeepSeek family guide
+│   ├── claude/                Claude family guide
 │   ├── gemini/                Gemini family guide
 │   ├── gpt/                   GPT family guide
 │   ├── llama/                 Llama family guide
