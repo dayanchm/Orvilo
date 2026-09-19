@@ -1,0 +1,38 @@
+name: Pull request title check
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+
+permissions:
+  contents: read
+
+jobs:
+  validate-title:
+    name: Validate pull request title
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Check Conventional Commit format
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          pattern='^(feat|fix|docs|style|refactor|test|build|ci|chore|perf|revert)(\([a-z0-9._/-]+\))?!?: .+'
+
+          if [[ ! "$PR_TITLE" =~ $pattern ]]; then
+            echo "Pull request title: $PR_TITLE"
+            echo "Expected format: type(optional-scope): short description"
+            echo "Example: docs(llama): add Llama 4 comparison"
+            echo "Allowed types: feat, fix, docs, style, refactor, test, build, ci, chore, perf, revert"
+            exit 1
+          fi
+
+          echo "Pull request title is valid."

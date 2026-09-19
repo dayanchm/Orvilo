@@ -1,0 +1,57 @@
+name: Filename check
+
+on:
+  pull_request:
+    paths:
+      - "models/**"
+      - ".github/workflows/filename-check.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "models/**"
+      - ".github/workflows/filename-check.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate-model-filenames:
+    name: Validate model filenames
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate model paths
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          invalid=0
+
+          while IFS= read -r -d '' directory; do
+            name="${directory##*/}"
+            if [[ ! "$name" =~ ^[a-z0-9]+([.-][a-z0-9]+)*$ ]]; then
+              echo "::error file=$directory::Directory names under models must use lowercase kebab-case."
+              invalid=1
+            fi
+          done < <(find models -mindepth 1 -type d -print0)
+
+          while IFS= read -r -d '' file; do
+            name="${file##*/}"
+
+            if [[ "$name" != "README.md" && ! "$name" =~ ^[a-z0-9]+([.-][a-z0-9]+)*\.md$ ]]; then
+              echo "::error file=$file::Markdown filenames must use lowercase kebab-case; version dots are allowed."
+              invalid=1
+            fi
+
+          done < <(find models -type f -name '*.md' -print0)
+
+          if [[ "$invalid" -ne 0 ]]; then
+            exit 1
+          fi
+
+          echo "All model directories and Markdown filenames are valid."
