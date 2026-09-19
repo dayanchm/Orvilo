@@ -122,6 +122,19 @@ flowchart LR
 
 [Explore the complete RAG learning path →](rag/README.md)
 
+## Learn How Models Are Trained
+
+Follow the complete pipeline from raw datasets and tokenization to pretraining, supervised fine-tuning, alignment, RLHF, reinforcement learning, and distillation.
+
+```mermaid
+flowchart LR
+    D["Datasets"] --> T["Tokenization"] --> P["Pretraining"]
+    P --> S["Supervised fine-tuning"] --> A["Alignment"]
+    A --> R["RLHF / RL"] --> E["Evaluation"]
+```
+
+[Explore the language-model training guide →](training/README.md)
+
 ## Model Family Guides
 
 Each completed guide contains a recommended reading order, clickable evolution diagram, technical comparison table, and capability matrix.
@@ -171,6 +184,7 @@ Orvilo/
 ├── assets/                    Documentation images
 ├── agents/                    AI agent learning guides
 ├── rag/                       Retrieval-Augmented Generation guides
+├── training/                  Language-model training guides
 ├── models/
 │   ├── *.md                   Foundational concepts
 │   ├── deepseek/              DeepSeek family guide
